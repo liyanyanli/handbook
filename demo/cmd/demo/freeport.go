@@ -1,11 +1,10 @@
 package main
 
 import (
-	"strconv"
-	"net"
 	"fmt"
+	"net"
+	"strconv"
 )
-
 
 // Get a free port.
 func Get() (port int, err error) {

@@ -4,27 +4,27 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 	"strconv"
+	"strings"
 )
 
-var rangeS ,rangeE int
+var rangeS, rangeE int
 var isEven bool
 
 func main() {
 	flag.IntVar(&rangeS, "rangeS", 1, "range starting")
 	flag.IntVar(&rangeE, "rangeE", 999, "range end")
-	flag.BoolVar(&isEven,"isEven",true,"true: num is even")
+	flag.BoolVar(&isEven, "isEven", true, "true: num is even")
 	flag.Parse()
 
-	if rangeS > rangeE{
+	if rangeS > rangeE {
 		os.Exit(1)
 	}
 
-	fmt.Println(Num(rangeS,rangeE,isEven))
+	fmt.Println(Num(rangeS, rangeE, isEven))
 }
 
-func Num(rangeS int, rangeE int, isEven bool)(int) {
+func Num(rangeS int, rangeE int, isEven bool) int {
 
 	var result int
 	hostname := os.Getenv("HOSTNAME")
@@ -33,7 +33,7 @@ func Num(rangeS int, rangeE int, isEven bool)(int) {
 		os.Exit(1)
 	}
 
-	hostNum,err := refineNum(hostname)
+	hostNum, err := refineNum(hostname)
 	if err != nil {
 		fmt.Errorf("refine host num error!")
 		os.Exit(1)
@@ -47,12 +47,12 @@ func Num(rangeS int, rangeE int, isEven bool)(int) {
 		result = (hostNum+1)*2 - 1 + rangeS
 	}
 
-	if (rangeS%2 > 0 && isEven) {
+	if rangeS%2 > 0 && isEven {
 		result = result - 1
-	} else if (rangeS%2 > 0 && !isEven) {
+	} else if rangeS%2 > 0 && !isEven {
 		result = result - 1
-	} else if (rangeS%2 == 0 && isEven) {
-		result = result -2
+	} else if rangeS%2 == 0 && isEven {
+		result = result - 2
 	}
 
 	if result <= rangeE {
@@ -64,20 +64,20 @@ func Num(rangeS int, rangeE int, isEven bool)(int) {
 	return -1
 }
 
-func refineNum (hostname string) (int, error) {
+func refineNum(hostname string) (int, error) {
 
-	splitHostName := strings.Split(hostname,"-")
+	splitHostName := strings.Split(hostname, "-")
 
-	indexSHN :=len(splitHostName)
+	indexSHN := len(splitHostName)
 
 	numS := splitHostName[indexSHN-1]
 
-	numI, err :=strconv.Atoi(numS)
+	numI, err := strconv.Atoi(numS)
 
 	if err != nil {
-		fmt.Errorf("conv error: hostnum %s",numS)
+		fmt.Errorf("conv error: hostnum %s", numS)
 	}
 
-	return numI,nil
+	return numI, nil
 
 }
